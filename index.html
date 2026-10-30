@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>5 Systems Circles™ Framework</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
         :root {
             --accent: #01F9C6;
@@ -27,33 +27,35 @@
             font-family: 'Inter', sans-serif;
             background-color: #ffffff;
             color: #0f172a;
-            padding: 24px 16px;
+            padding: 16px 12px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         header {
             max-width: 900px;
-            margin: 0 auto 32px auto;
+            margin: 0 auto 20px auto;
             text-align: center;
         }
 
         header h1 {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 800;
             color: #0f172a;
             letter-spacing: -0.025em;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            line-height: 1.2;
         }
 
         header p {
             color: #475569;
-            font-size: 15px;
+            font-size: 14px;
             max-width: 650px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         .main-layout {
@@ -62,7 +64,7 @@
             width: 100%;
             display: grid;
             grid-template-columns: 1fr;
-            gap: 32px;
+            gap: 20px;
             align-items: center;
         }
 
@@ -71,14 +73,26 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            width: 100%;
+            overflow: visible;
+        }
+
+        /* Fluid wrapper so it never gets clipped on mobile screens */
+        .scaler-wrap {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: visible;
+            height: 320px; /* Constrains vertical height on mobile */
         }
 
         .scaler {
-            transform: scale(0.72);
+            transform: scale(0.62);
             transform-origin: center center;
             width: 490px;
             height: 490px;
-            margin: -65px auto;
+            flex-shrink: 0;
         }
 
         .diagram-stage {
@@ -97,6 +111,7 @@
             border-radius: 50%;
             transition: all 0.35s ease;
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .orbit-security {
@@ -157,6 +172,7 @@
             opacity: 0.78;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
         .venn-ring:hover, .venn-ring.active-ring {
             opacity: 0.95;
@@ -194,6 +210,7 @@
             box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
             cursor: pointer;
             transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
         }
         .ring-center:hover, .ring-center.active-ring {
             border-color: #00b894;
@@ -216,6 +233,7 @@
             box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
             transition: all 0.25s ease;
             white-space: nowrap;
+            -webkit-tap-highlight-color: transparent;
         }
         .orbit-badge:hover {
             transform: scale(1.05);
@@ -250,7 +268,7 @@
             text-align: center;
             font-size: 12px;
             color: #64748b;
-            margin-top: 16px;
+            margin-top: 10px;
             font-style: italic;
         }
 
@@ -258,54 +276,55 @@
         .details-panel {
             background-color: rgba(248, 250, 252, 0.9);
             border: 1px solid #e2e8f0;
-            padding: 24px;
-            border-radius: 24px;
+            padding: 20px;
+            border-radius: 20px;
             box-shadow: 0 10px 25px -5px rgba(226, 232, 240, 0.5);
+            width: 100%;
         }
 
         .card-badge {
             display: inline-block;
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 8px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             border-width: 1px;
             border-style: solid;
         }
 
         .card-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             color: #0f172a;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             line-height: 1.25;
         }
 
         .card-desc {
             color: #475569;
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 24px;
+            font-size: 13px;
+            line-height: 1.55;
+            margin-bottom: 16px;
         }
 
         .card-box {
             border-top: 1px solid #e2e8f0;
-            padding-top: 20px;
+            padding-top: 16px;
         }
 
         .strat-card {
             background: #ffffff;
-            padding: 18px;
-            border-radius: 16px;
+            padding: 14px;
+            border-radius: 14px;
             border: 1px solid rgba(226, 232, 240, 0.8);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
         }
 
         .strat-label {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -316,17 +335,17 @@
         .strat-text {
             font-size: 12px;
             color: #475569;
-            line-height: 1.6;
+            line-height: 1.55;
         }
 
         .panel-footer {
-            margin-top: 24px;
-            padding-top: 16px;
+            margin-top: 18px;
+            padding-top: 12px;
             border-top: 1px solid #e2e8f0;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .panel-footer a {
@@ -337,33 +356,48 @@
             text-decoration-color: #34d399;
         }
 
-        @media (min-width: 640px) {
-            .scaler {
-                transform: scale(0.92);
-                margin: -20px auto;
+        /* Screen sizes above standard mobile */
+        @media (min-width: 480px) {
+            .scaler-wrap {
+                height: 380px;
             }
-            header h1 {
-                font-size: 36px;
+            .scaler {
+                transform: scale(0.76);
             }
         }
 
-        @media (min-width: 1024px) {
-            body {
-                padding: 40px 24px;
+        @media (min-width: 768px) {
+            .scaler-wrap {
+                height: 440px;
+            }
+            .scaler {
+                transform: scale(0.88);
             }
             header h1 {
-                font-size: 44px;
+                font-size: 34px;
+            }
+        }
+
+        /* Desktop side-by-side */
+        @media (min-width: 1024px) {
+            body {
+                padding: 32px 24px;
+            }
+            header h1 {
+                font-size: 42px;
             }
             .main-layout {
                 grid-template-columns: 7fr 5fr;
-                gap: 48px;
+                gap: 40px;
+            }
+            .scaler-wrap {
+                height: 490px;
             }
             .scaler {
                 transform: scale(1);
-                margin: 0 auto;
             }
             .details-panel {
-                padding: 32px;
+                padding: 28px;
             }
         }
     </style>
@@ -372,31 +406,33 @@
 
     <header>
         <h1>5 Systems Circles™ Framework</h1>
-        <p>Having audited and optimized diverse businesses for over 5 years, I developed the <strong>5 Systems Circles™ Framework</strong> to clarify how systems actually drive growth.</p>
+        <p>Having audited and optimized diverse businesses for over 5 years, I developed the <strong>5 Systems Circles™ Framework</strong> to clarify how systems actually drive growth. Click any area of the diagram to see what it's about.</p>
     </header>
 
     <div class="main-layout">
         <div class="left-col">
-            <div class="scaler">
-                <div class="diagram-stage">
-                    <div id="target-security" onclick="selectItem('security')" class="orbit-ring orbit-security"></div>
-                    <div onclick="selectItem('security')" class="orbit-badge badge-security">🛡️ Security Layer</div>
+            <div class="scaler-wrap">
+                <div class="scaler">
+                    <div class="diagram-stage">
+                        <div id="target-security" onclick="selectItem('security')" class="orbit-ring orbit-security"></div>
+                        <div onclick="selectItem('security')" class="orbit-badge badge-security">🛡️ Security Layer</div>
 
-                    <div id="target-analytics" onclick="selectItem('analytics')" class="orbit-ring orbit-analytics"></div>
-                    <div onclick="selectItem('analytics')" class="orbit-badge badge-analytics">📊 Data Analytics</div>
+                        <div id="target-analytics" onclick="selectItem('analytics')" class="orbit-ring orbit-analytics"></div>
+                        <div onclick="selectItem('analytics')" class="orbit-badge badge-analytics">📊 Data Analytics</div>
 
-                    <div id="target-integration" onclick="selectItem('integration')" class="orbit-ring orbit-integration"></div>
-                    <div onclick="selectItem('integration')" class="orbit-badge badge-integration">⚡ System Integration</div>
+                        <div id="target-integration" onclick="selectItem('integration')" class="orbit-ring orbit-integration"></div>
+                        <div onclick="selectItem('integration')" class="orbit-badge badge-integration">⚡ System Integration</div>
 
-                    <div class="venn-core">
-                        <div id="target-comm" onclick="selectItem('comm')" class="venn-ring ring-comm"></div>
-                        <div id="target-ops" onclick="selectItem('ops')" class="venn-ring ring-ops"></div>
-                        <div id="target-finance" onclick="selectItem('finance')" class="venn-ring ring-finance"></div>
-                        <div id="target-customer" onclick="selectItem('customer')" class="venn-ring ring-customer"></div>
-                        <div id="target-marketing" onclick="selectItem('marketing')" class="venn-ring ring-marketing"></div>
+                        <div class="venn-core">
+                            <div id="target-comm" onclick="selectItem('comm')" class="venn-ring ring-comm"></div>
+                            <div id="target-ops" onclick="selectItem('ops')" class="venn-ring ring-ops"></div>
+                            <div id="target-finance" onclick="selectItem('finance')" class="venn-ring ring-finance"></div>
+                            <div id="target-customer" onclick="selectItem('customer')" class="venn-ring ring-customer"></div>
+                            <div id="target-marketing" onclick="selectItem('marketing')" class="venn-ring ring-marketing"></div>
 
-                        <div id="target-human" onclick="selectItem('human')" class="ring-center">
-                            Human<br>Capital
+                            <div id="target-human" onclick="selectItem('human')" class="ring-center">
+                                Human<br>Capital
+                            </div>
                         </div>
                     </div>
                 </div>
