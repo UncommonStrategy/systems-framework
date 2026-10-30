@@ -1,372 +1,546 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5 Systems Circles™ Framework | Uncommon Strategy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5 Systems Circles™ Framework</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-        :root {
-            --accent: #01F9C6;
-            --accent-dark: #00b894;
-            --circle-comm: #CC3366;
-            --circle-ops: #864871;
-            --circle-finance: #1863DC;
-            --circle-customer: #293C5B;
-            --circle-marketing: #008000;
-        }
+        :root {
+            --accent: #01F9C6;
+            --accent-dark: #00b894;
+            --circle-comm: #CC3366;
+            --circle-ops: #864871;
+            --circle-finance: #1863DC;
+            --circle-customer: #293C5B;
+            --circle-marketing: #008000;
+        }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #0f172a;
-        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        .diagram-stage {
-            position: relative;
-            width: 490px;
-            height: 490px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #0f172a;
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100vh;
+        }
 
-        /* Outer Concentric Orbits */
-        .orbit-ring {
-            position: absolute;
-            border-radius: 50%;
-            transition: all 0.35s ease;
-            cursor: pointer;
-        }
+        header {
+            max-width: 900px;
+            margin: 0 auto 32px auto;
+            text-align: center;
+        }
 
-        /* Security Outer Ring */
-        .orbit-security {
-            width: 480px;
-            height: 480px;
-            border: 2px dashed rgba(0, 184, 148, 0.55);
-            background: rgba(1, 249, 198, 0.03);
-            z-index: 5;
-        }
-        .orbit-security:hover, .orbit-security.active-ring {
-            border-color: #00b894;
-            border-style: solid;
-            box-shadow: 0 0 24px rgba(1, 249, 198, 0.45);
-            background: rgba(1, 249, 198, 0.08);
-        }
+        header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -0.025em;
+            margin-bottom: 12px;
+        }
 
-        /* Data Analytics Middle Ring */
-        .orbit-analytics {
-            width: 414px;
-            height: 414px;
-            border: 2px dotted rgba(24, 99, 220, 0.55);
-            background: rgba(24, 99, 220, 0.02);
-            z-index: 6;
-        }
-        .orbit-analytics:hover, .orbit-analytics.active-ring {
-            border-color: #1863DC;
-            border-style: dashed;
-            box-shadow: 0 0 24px rgba(24, 99, 220, 0.25);
-            background: rgba(24, 99, 220, 0.06);
-        }
+        header p {
+            color: #475569;
+            font-size: 15px;
+            max-width: 650px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
 
-        /* Integration Inner Ring */
-        .orbit-integration {
-            width: 350px;
-            height: 350px;
-            border: 2px solid rgba(134, 72, 113, 0.4);
-            background: rgba(134, 72, 113, 0.02);
-            z-index: 7;
-        }
-        .orbit-integration:hover, .orbit-integration.active-ring {
-            border-color: #864871;
-            box-shadow: 0 0 24px rgba(134, 72, 113, 0.25);
-            background: rgba(134, 72, 113, 0.07);
-        }
+        .main-layout {
+            max-width: 1152px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            align-items: center;
+        }
 
-        .venn-core {
-            position: absolute;
-            width: 280px;
-            height: 280px;
-            z-index: 10;
-        }
+        .left-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-        .venn-ring {
-            position: absolute;
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            mix-blend-mode: multiply;
-            opacity: 0.78;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
-        .venn-ring:hover, .venn-ring.active-ring {
-            opacity: 0.95;
-            transform: scale(1.06);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            z-index: 25 !important;
-        }
+        .scaler {
+            transform: scale(0.72);
+            transform-origin: center center;
+            width: 490px;
+            height: 490px;
+            margin: -65px auto;
+        }
 
-        .ring-comm { background-color: var(--circle-comm); left: 70px; top: 25px; z-index: 11; }
-        .ring-ops { background-color: var(--circle-ops); left: 110px; top: 55px; z-index: 12; }
-        .ring-finance { background-color: var(--circle-finance); left: 95px; top: 105px; z-index: 13; }
-        .ring-customer { background-color: var(--circle-customer); left: 45px; top: 105px; z-index: 14; }
-        .ring-marketing { background-color: var(--circle-marketing); left: 30px; top: 55px; z-index: 15; }
+        .diagram-stage {
+            position: relative;
+            width: 490px;
+            height: 490px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-        .ring-center {
-            position: absolute;
-            width: 68px;
-            height: 68px;
-            background-color: #ffffff;
-            border: 1.5px solid #cbd5e1;
-            border-radius: 50%;
-            left: 106px;
-            top: 106px;
-            z-index: 30;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 8.5px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            color: #334155;
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .ring-center:hover, .ring-center.active-ring {
-            border-color: #00b894;
-            color: #0f172a;
-            box-shadow: 0 0 0 3px rgba(1, 249, 198, 0.4), 0 6px 16px rgba(0, 0, 0, 0.12);
-            transform: scale(1.06);
-        }
+        /* Outer Concentric Orbits */
+        .orbit-ring {
+            position: absolute;
+            border-radius: 50%;
+            transition: all 0.35s ease;
+            cursor: pointer;
+        }
 
-        .orbit-badge {
-            position: absolute;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            padding: 4px 12px;
-            border-radius: 9999px;
-            z-index: 40;
-            cursor: pointer;
-            box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
-            transition: all 0.25s ease;
-        }
-        .orbit-badge:hover {
-            transform: scale(1.05);
-        }
-    </style>
+        .orbit-security {
+            width: 480px;
+            height: 480px;
+            border: 2px dashed rgba(0, 184, 148, 0.55);
+            background: rgba(1, 249, 198, 0.03);
+            z-index: 5;
+        }
+        .orbit-security:hover, .orbit-security.active-ring {
+            border-color: #00b894;
+            border-style: solid;
+            box-shadow: 0 0 24px rgba(1, 249, 198, 0.45);
+            background: rgba(1, 249, 198, 0.08);
+        }
+
+        .orbit-analytics {
+            width: 414px;
+            height: 414px;
+            border: 2px dotted rgba(24, 99, 220, 0.55);
+            background: rgba(24, 99, 220, 0.02);
+            z-index: 6;
+        }
+        .orbit-analytics:hover, .orbit-analytics.active-ring {
+            border-color: #1863DC;
+            border-style: dashed;
+            box-shadow: 0 0 24px rgba(24, 99, 220, 0.25);
+            background: rgba(24, 99, 220, 0.06);
+        }
+
+        .orbit-integration {
+            width: 350px;
+            height: 350px;
+            border: 2px solid rgba(134, 72, 113, 0.4);
+            background: rgba(134, 72, 113, 0.02);
+            z-index: 7;
+        }
+        .orbit-integration:hover, .orbit-integration.active-ring {
+            border-color: #864871;
+            box-shadow: 0 0 24px rgba(134, 72, 113, 0.25);
+            background: rgba(134, 72, 113, 0.07);
+        }
+
+        /* Inner Venn */
+        .venn-core {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            z-index: 10;
+        }
+
+        .venn-ring {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+            opacity: 0.78;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .venn-ring:hover, .venn-ring.active-ring {
+            opacity: 0.95;
+            transform: scale(1.06);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            z-index: 25 !important;
+        }
+
+        .ring-comm { background-color: var(--circle-comm); left: 70px; top: 25px; z-index: 11; }
+        .ring-ops { background-color: var(--circle-ops); left: 110px; top: 55px; z-index: 12; }
+        .ring-finance { background-color: var(--circle-finance); left: 95px; top: 105px; z-index: 13; }
+        .ring-customer { background-color: var(--circle-customer); left: 45px; top: 105px; z-index: 14; }
+        .ring-marketing { background-color: var(--circle-marketing); left: 30px; top: 55px; z-index: 15; }
+
+        .ring-center {
+            position: absolute;
+            width: 68px;
+            height: 68px;
+            background-color: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 50%;
+            left: 106px;
+            top: 106px;
+            z-index: 30;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 8.5px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            line-height: 1.15;
+            text-transform: uppercase;
+            color: #334155;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .ring-center:hover, .ring-center.active-ring {
+            border-color: #00b894;
+            color: #0f172a;
+            box-shadow: 0 0 0 3px rgba(1, 249, 198, 0.4), 0 6px 16px rgba(0, 0, 0, 0.12);
+            transform: scale(1.06);
+        }
+
+        .orbit-badge {
+            position: absolute;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            z-index: 40;
+            cursor: pointer;
+            background: #ffffff;
+            box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+        .orbit-badge:hover {
+            transform: scale(1.05);
+        }
+
+        .badge-security {
+            color: #065f46;
+            border: 1px solid rgba(52, 211, 153, 0.8);
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .badge-security:hover {
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        .badge-analytics {
+            color: #1d4ed8;
+            border: 1px solid rgba(96, 165, 250, 0.8);
+            bottom: 52px;
+            right: 40px;
+        }
+
+        .badge-integration {
+            color: #6b21a8;
+            border: 1px solid rgba(192, 132, 252, 0.8);
+            top: 62px;
+            left: 62px;
+        }
+
+        .hint {
+            text-align: center;
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 16px;
+            font-style: italic;
+        }
+
+        /* Right Column: Details Panel */
+        .details-panel {
+            background-color: rgba(248, 250, 252, 0.9);
+            border: 1px solid #e2e8f0;
+            padding: 24px;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px -5px rgba(226, 232, 240, 0.5);
+        }
+
+        .card-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+            border-width: 1px;
+            border-style: solid;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: #0f172a;
+            margin-bottom: 12px;
+            line-height: 1.25;
+        }
+
+        .card-desc {
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .card-box {
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+
+        .strat-card {
+            background: #ffffff;
+            padding: 18px;
+            border-radius: 16px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .strat-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .strat-text {
+            font-size: 12px;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .panel-footer {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+
+        .panel-footer a {
+            font-weight: 700;
+            color: #0f172a;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            text-decoration-color: #34d399;
+        }
+
+        @media (min-width: 640px) {
+            .scaler {
+                transform: scale(0.92);
+                margin: -20px auto;
+            }
+            header h1 {
+                font-size: 36px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            body {
+                padding: 40px 24px;
+            }
+            header h1 {
+                font-size: 44px;
+            }
+            .main-layout {
+                grid-template-columns: 7fr 5fr;
+                gap: 48px;
+            }
+            .scaler {
+                transform: scale(1);
+                margin: 0 auto;
+            }
+            .details-panel {
+                padding: 32px;
+            }
+        }
+    </style>
 </head>
-<body class="p-6 md:p-12 min-h-screen flex flex-col justify-between bg-white text-slate-800">
+<body>
 
-    <header class="max-w-5xl mx-auto text-center mb-8">
-        <h1 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">5 Systems Circles™ Framework</h1>
-        <p class="text-slate-600 text-sm md:text-base max-w-2xl mx-auto font-normal leading-relaxed">
-            Having audited and optimized diverse businesses for over 5 years, I developed the <strong class="text-slate-900">5 Systems Circles™ Framework</strong> to clarify how systems actually drive growth.
-        </p>
-    </header>
+    <header>
+        <h1>5 Systems Circles™ Framework</h1>
+        <p>Having audited and optimized diverse businesses for over 5 years, I developed the <strong>5 Systems Circles™ Framework</strong> to clarify how systems actually drive growth.</p>
+    </header>
 
-    <main class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center my-auto">
-        
-        <!-- Left Column: Interactive Diagram on White Stage -->
-        <div class="lg:col-span-7 flex flex-col items-center justify-center">
-            
-            <div class="scale-85 sm:scale-100 origin-center">
-                <div class="diagram-stage">
-                    
-                    <!-- Outer Orbit 3: Security -->
-                    <div id="target-security" onclick="selectItem('security')" class="orbit-ring orbit-security"></div>
-                    <div onclick="selectItem('security')" class="orbit-badge bg-white text-emerald-800 border border-emerald-400/80 shadow-sm" style="top: 2px; left: 50%; transform: translateX(-50%);">
-                        🛡️ Security Layer
-                    </div>
+    <div class="main-layout">
+        <div class="left-col">
+            <div class="scaler">
+                <div class="diagram-stage">
+                    <div id="target-security" onclick="selectItem('security')" class="orbit-ring orbit-security"></div>
+                    <div onclick="selectItem('security')" class="orbit-badge badge-security">🛡️ Security Layer</div>
 
-                    <!-- Middle Orbit 2: Data Analytics -->
-                    <div id="target-analytics" onclick="selectItem('analytics')" class="orbit-ring orbit-analytics"></div>
-                    <div onclick="selectItem('analytics')" class="orbit-badge bg-white text-blue-700 border border-blue-400/80 shadow-sm" style="bottom: 52px; right: 40px;">
-                        📊 Data Analytics
-                    </div>
+                    <div id="target-analytics" onclick="selectItem('analytics')" class="orbit-ring orbit-analytics"></div>
+                    <div onclick="selectItem('analytics')" class="orbit-badge badge-analytics">📊 Data Analytics</div>
 
-                    <!-- Inner Orbit 1: Integration (Straddling purple line) -->
-                    <div id="target-integration" onclick="selectItem('integration')" class="orbit-ring orbit-integration"></div>
-                    <div onclick="selectItem('integration')" class="orbit-badge bg-white text-purple-800 border border-purple-400/80 shadow-sm" style="top: 62px; left: 62px;">
-                        ⚡ System Integration
-                    </div>
+                    <div id="target-integration" onclick="selectItem('integration')" class="orbit-ring orbit-integration"></div>
+                    <div onclick="selectItem('integration')" class="orbit-badge badge-integration">⚡ System Integration</div>
 
-                    <!-- Inner 5-Part Venn Core -->
-                    <div class="venn-core">
-                        <div id="target-comm" onclick="selectItem('comm')" class="venn-ring ring-comm"></div>
-                        <div id="target-ops" onclick="selectItem('ops')" class="venn-ring ring-ops"></div>
-                        <div id="target-finance" onclick="selectItem('finance')" class="venn-ring ring-finance"></div>
-                        <div id="target-customer" onclick="selectItem('customer')" class="venn-ring ring-customer"></div>
-                        <div id="target-marketing" onclick="selectItem('marketing')" class="venn-ring ring-marketing"></div>
+                    <div class="venn-core">
+                        <div id="target-comm" onclick="selectItem('comm')" class="venn-ring ring-comm"></div>
+                        <div id="target-ops" onclick="selectItem('ops')" class="venn-ring ring-ops"></div>
+                        <div id="target-finance" onclick="selectItem('finance')" class="venn-ring ring-finance"></div>
+                        <div id="target-customer" onclick="selectItem('customer')" class="venn-ring ring-customer"></div>
+                        <div id="target-marketing" onclick="selectItem('marketing')" class="venn-ring ring-marketing"></div>
 
-                        <div id="target-human" onclick="selectItem('human')" class="ring-center">
-                            Human<br>Capital
-                        </div>
-                    </div>
+                        <div id="target-human" onclick="selectItem('human')" class="ring-center">
+                            Human<br>Capital
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="hint">Click any outer ring or inner circle to explore details.</p>
+        </div>
 
-                </div>
-            </div>
+        <div class="details-panel">
+            <div id="card-badge" class="card-badge"></div>
+            <h3 id="card-title" class="card-title"></h3>
+            <p id="card-desc" class="card-desc"></p>
 
-            <p class="text-center text-xs text-slate-500 mt-4 italic">
-                Click any outer ring or inner circle to explore details.
-            </p>
+            <div class="card-box">
+                <div class="strat-card">
+                    <span id="card-label-strat" class="strat-label">How We Check This</span>
+                    <p id="card-strat" class="strat-text"></p>
+                </div>
+            </div>
 
-        </div>
+            <div class="panel-footer">
+                <span style="color: #94a3b8;">© 2026</span>
+                <a href="https://clients.uncommonstrategy.net/public/5sc-assessment" target="_blank">Uncommon Strategy</a>
+            </div>
+        </div>
+    </div>
 
-        <!-- Right Column: Interactive Details Panel (Light Card Theme) -->
-        <div class="lg:col-span-5 bg-slate-50/90 border border-slate-200 p-6 md:p-8 rounded-3xl shadow-lg shadow-slate-200/50">
-            
-            <div id="card-badge" class="inline-block px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider mb-4 bg-emerald-50 text-emerald-800 border border-emerald-300">
-                Outer Layer: Security
-            </div>
+    <script>
+        const dataSet = {
+            security: {
+                badge: "Outer Ring: Security Layer",
+                title: "Security Layer",
+                desc: "Security protects your client details, finances, messages, and files. It keeps your business safe without getting in the way of daily work.",
+                strat: "Making sure passwords are stored safely, two-step login is turned on, and your team knows how to spot common cyber risks.",
+                accent: "#00b894",
+                badgeBg: "rgba(0, 184, 148, 0.12)",
+                badgeBorder: "rgba(0, 184, 148, 0.4)",
+                textColor: "#065f46"
+            },
+            analytics: {
+                badge: "Middle Ring: Data Analytics",
+                title: "Data Analytics",
+                desc: "Analytics shows you what’s actually working. By tracking key numbers across your business, you can make clear, confident decisions.",
+                strat: "Setting up simple, clear dashboards so you can see sales, expenses, and team progress in one glance.",
+                accent: "#1863DC",
+                badgeBg: "rgba(24, 99, 220, 0.1)",
+                badgeBorder: "rgba(24, 99, 220, 0.35)",
+                textColor: "#1e40af"
+            },
+            integration: {
+                badge: "Inner Ring: System Integration",
+                title: "System Integration",
+                desc: "System Integration gets your software talking to each other so you and your team don't waste time on manual data re-entry.",
+                strat: "Connecting your key software tools so information moves smoothly between departments automatically.",
+                accent: "#864871",
+                badgeBg: "rgba(134, 72, 113, 0.12)",
+                badgeBorder: "rgba(134, 72, 113, 0.35)",
+                textColor: "#581c87"
+            },
+            comm: {
+                badge: "System Circle 01: Communication",
+                title: "Communication & Collaboration",
+                desc: "Clear ways for your team and clients to talk, so important messages don't get lost across too many apps.",
+                strat: "Setting clean boundaries on which apps to use, and creating handy message templates for client replies.",
+                accent: "#CC3366",
+                badgeBg: "rgba(204, 51, 102, 0.12)",
+                badgeBorder: "rgba(204, 51, 102, 0.35)",
+                textColor: "#9f1239"
+            },
+            ops: {
+                badge: "System Circle 02: Operations",
+                title: "Operations Management",
+                desc: "Smooth daily workflows and step-by-step guides so work gets done right and on time without constant oversight.",
+                strat: "Turning messy tasks into simple checklists, tracking project goals, and automating repetitive steps.",
+                accent: "#864871",
+                badgeBg: "rgba(134, 72, 113, 0.12)",
+                badgeBorder: "rgba(134, 72, 113, 0.35)",
+                textColor: "#701a75"
+            },
+            finance: {
+                badge: "System Circle 03: Financials",
+                title: "Financial Management",
+                desc: "Simple, reliable tracking for money coming in and going out, so you always know where your business stands.",
+                strat: "Automating invoice logging, tracking expenses, and setting up straightforward cash flow reviews.",
+                accent: "#1863DC",
+                badgeBg: "rgba(24, 99, 220, 0.12)",
+                badgeBorder: "rgba(24, 99, 220, 0.35)",
+                textColor: "#1e3a8a"
+            },
+            customer: {
+                badge: "System Circle 04: Customer Mgmt",
+                title: "Customer Management",
+                desc: "Welcoming onboarding and quick support systems that make working with you a great experience for your clients.",
+                strat: "Mapping out smooth client welcome steps, clear support channels, and reliable follow-up schedules.",
+                accent: "#293C5B",
+                badgeBg: "rgba(41, 60, 91, 0.12)",
+                badgeBorder: "rgba(41, 60, 91, 0.35)",
+                textColor: "#1e293b"
+            },
+            marketing: {
+                badge: "System Circle 05: Marketing",
+                title: "Marketing System",
+                desc: "Simple, steady paths for finding new leads and turning them into happy clients.",
+                strat: "Creating straightforward content creation routines and simple lead capture steps.",
+                accent: "#008000",
+                badgeBg: "rgba(0, 128, 0, 0.12)",
+                badgeBorder: "rgba(0, 128, 0, 0.35)",
+                textColor: "#14532d"
+            },
+            human: {
+                badge: "Core Confluence: Human Capital",
+                title: "Human Capital",
+                desc: "The real heart of your business. Technology should always be built around people to make their work easier and more enjoyable.",
+                strat: "Giving your team clear role expectations, practical training, and tools they actually enjoy using.",
+                accent: "#00b894",
+                badgeBg: "rgba(0, 184, 148, 0.12)",
+                badgeBorder: "rgba(0, 184, 148, 0.4)",
+                textColor: "#065f46"
+            }
+        };
 
-            <h3 id="card-title" class="text-2xl font-black text-slate-900 mb-3">Security Layer</h3>
-            <p id="card-desc" class="text-slate-600 text-sm leading-relaxed mb-6 font-normal">
-                Security protects your client details, finances, messages, and files. It keeps your business safe without getting in the way of daily work.
-            </p>
+        function selectItem(key) {
+            document.querySelectorAll('.orbit-ring, .venn-ring, .ring-center').forEach(el => {
+                el.classList.remove('active-ring');
+            });
 
-            <div class="space-y-4 border-t border-slate-200 pt-6">
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
-                    <span id="card-label-strat" class="text-xs font-bold text-emerald-700 uppercase tracking-wider block mb-1">How We Check This</span>
-                    <p id="card-strat" class="text-xs text-slate-600 leading-relaxed font-normal">Making sure passwords are stored safely, two-step login is turned on, and your team knows how to spot common cyber risks.</p>
-                </div>
-            </div>
+            const target = document.getElementById(`target-${key}`);
+            if (target) target.classList.add('active-ring');
 
-            <div class="mt-8 pt-4 border-t border-slate-200 flex items-center justify-between">
-                <span class="text-xs text-slate-400">© 2026</span>
-                <a href="https://clients.uncommonstrategy.net/public/5sc-assessment" target="_blank" class="text-xs font-bold text-slate-900 hover:text-emerald-700 transition underline underline-offset-4 decoration-emerald-400">
-                    Uncommon Strategy
-                </a>
-            </div>
-        </div>
+            const item = dataSet[key];
+            if (!item) return;
 
-    </main>
+            const badgeEl = document.getElementById('card-badge');
+            badgeEl.textContent = item.badge;
+            badgeEl.style.color = item.textColor;
+            badgeEl.style.borderColor = item.badgeBorder;
+            badgeEl.style.backgroundColor = item.badgeBg;
 
-    <script>
-        const dataSet = {
-            security: {
-                badge: "Outer Ring: Security Layer",
-                title: "Security Layer",
-                desc: "Security protects your client details, finances, messages, and files. It keeps your business safe without getting in the way of daily work.",
-                strat: "Making sure passwords are stored safely, two-step login is turned on, and your team knows how to spot common cyber risks.",
-                accent: "#00b894",
-                badgeBg: "rgba(0, 184, 148, 0.12)",
-                badgeBorder: "rgba(0, 184, 148, 0.4)",
-                textColor: "#065f46"
-            },
-            analytics: {
-                badge: "Middle Ring: Data Analytics",
-                title: "Data Analytics",
-                desc: "Analytics shows you what’s actually working. By tracking key numbers across your business, you can make clear, confident decisions.",
-                strat: "Setting up simple, clear dashboards so you can see sales, expenses, and team progress in one glance.",
-                accent: "#1863DC",
-                badgeBg: "rgba(24, 99, 220, 0.1)",
-                badgeBorder: "rgba(24, 99, 220, 0.35)",
-                textColor: "#1e40af"
-            },
-            integration: {
-                badge: "Inner Ring: System Integration",
-                title: "System Integration",
-                desc: "System Integration gets your software talking to each other so you and your team don't waste time on manual data re-entry.",
-                strat: "Connecting your key software tools so information moves smoothly between departments automatically.",
-                accent: "#864871",
-                badgeBg: "rgba(134, 72, 113, 0.12)",
-                badgeBorder: "rgba(134, 72, 113, 0.35)",
-                textColor: "#581c87"
-            },
-            comm: {
-                badge: "System Circle 01: Communication",
-                title: "Communication & Collaboration",
-                desc: "Clear ways for your team and clients to talk, so important messages don't get lost across too many apps.",
-                strat: "Setting clean boundaries on which apps to use, and creating handy message templates for client replies.",
-                accent: "#CC3366",
-                badgeBg: "rgba(204, 51, 102, 0.12)",
-                badgeBorder: "rgba(204, 51, 102, 0.35)",
-                textColor: "#9f1239"
-            },
-            ops: {
-                badge: "System Circle 02: Operations",
-                title: "Operations Management",
-                desc: "Smooth daily workflows and step-by-step guides so work gets done right and on time without constant oversight.",
-                strat: "Turning messy tasks into simple checklists, tracking project goals, and automating repetitive steps.",
-                accent: "#864871",
-                badgeBg: "rgba(134, 72, 113, 0.12)",
-                badgeBorder: "rgba(134, 72, 113, 0.35)",
-                textColor: "#701a75"
-            },
-            finance: {
-                badge: "System Circle 03: Financials",
-                title: "Financial Management",
-                desc: "Simple, reliable tracking for money coming in and going out, so you always know where your business stands.",
-                strat: "Automating invoice logging, tracking expenses, and setting up straightforward cash flow reviews.",
-                accent: "#1863DC",
-                badgeBg: "rgba(24, 99, 220, 0.12)",
-                badgeBorder: "rgba(24, 99, 220, 0.35)",
-                textColor: "#1e3a8a"
-            },
-            customer: {
-                badge: "System Circle 04: Customer Mgmt",
-                title: "Customer Management",
-                desc: "Welcoming onboarding and quick support systems that make working with you a great experience for your clients.",
-                strat: "Mapping out smooth client welcome steps, clear support channels, and reliable follow-up schedules.",
-                accent: "#293C5B",
-                badgeBg: "rgba(41, 60, 91, 0.12)",
-                badgeBorder: "rgba(41, 60, 91, 0.35)",
-                textColor: "#1e293b"
-            },
-            marketing: {
-                badge: "System Circle 05: Marketing",
-                title: "Marketing System",
-                desc: "Simple, steady paths for finding new leads and turning them into happy clients.",
-                strat: "Creating straightforward content creation routines and simple lead capture steps.",
-                accent: "#008000",
-                badgeBg: "rgba(0, 128, 0, 0.12)",
-                badgeBorder: "rgba(0, 128, 0, 0.35)",
-                textColor: "#14532d"
-            },
-            human: {
-                badge: "Core Confluence: Human Capital",
-                title: "Human Capital",
-                desc: "The real heart of your business. Technology should always be built around people to make their work easier and more enjoyable.",
-                strat: "Giving your team clear role expectations, practical training, and tools they actually enjoy using.",
-                accent: "#00b894",
-                badgeBg: "rgba(0, 184, 148, 0.12)",
-                badgeBorder: "rgba(0, 184, 148, 0.4)",
-                textColor: "#065f46"
-            }
-        };
+            document.getElementById('card-title').textContent = item.title;
+            document.getElementById('card-desc').textContent = item.desc;
+            document.getElementById('card-strat').textContent = item.strat;
+            document.getElementById('card-label-strat').style.color = item.accent;
+        }
 
-        function selectItem(key) {
-            document.querySelectorAll('.orbit-ring, .venn-ring, .ring-center').forEach(el => {
-                el.classList.remove('active-ring');
-            });
-
-            const target = document.getElementById(`target-${key}`);
-            if (target) target.classList.add('active-ring');
-
-            const item = dataSet[key];
-            const badgeEl = document.getElementById('card-badge');
-            badgeEl.textContent = item.badge;
-            badgeEl.style.color = item.textColor;
-            badgeEl.style.borderColor = item.badgeBorder;
-            badgeEl.style.backgroundColor = item.badgeBg;
-
-            document.getElementById('card-title').textContent = item.title;
-            document.getElementById('card-desc').textContent = item.desc;
-            document.getElementById('card-strat').textContent = item.strat;
-            document.getElementById('card-label-strat').style.color = item.accent;
-        }
-
-        // Initialize default view state
-        selectItem('security');
-    </script>
+        selectItem('security');
+    </script>
 </body>
 </html>
